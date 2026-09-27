@@ -1,1 +1,94 @@
+{
+  "id": "KASUS-001",
+  "title": "Kebakaran Gudang PT Artha Logistik",
+  "category": "Pidana Umum / Pembakaran Sengaja",
+  "defendant": {
+    "name": "Budi Santoso",
+    "age": 38,
+    "role": "Mantan Manajer Gudang",
+    "background": "Bekerja 8 tahun. Rekam jejak bersih hingga ditemukan selisih stok inventaris senilai Rp 300 juta."
+  },
+  "charge": {
+    "pasal": "Pasal 187 KUHP",
+    "title": "Kejahatan yang Membahayakan Keamanan Umum bagi Barang / Manusia",
+    "text": "Barangsiapa dengan sengaja menimbulkan kebakaran, ledakan, atau banjir, diancam dengan pidana penjara paling lama 12 tahun, jika karena perbuatan tersebut timbul bahaya umum bagi barang."
+  },
+  "description": "Gudang A terbakar pada Jumat malam. Budi dituduh membakar gudang guna memusnahkan bukti audit fisik atas selisih persediaan barang.",
+  "prosecution": {
+    "prosecutor": "JPU Hendra, S.H.",
+    "argument": "Terdakwa menyiramkan percepat api di dekat panel listrik pukul 22.48 WITA untuk merekayasa seolah-olah terjadi korsleting listrik."
+  },
+  "defense": {
+    "advocate": "Bambang Sukarno, S.H. & Partners",
+    "argument": "Terdakwa sudah pulang sejak pukul 21.00 WITA. Kebakaran murni akibat isolasi kabel tua yang diabaikan direksi."
+  },
+  "evidenceList": [
+    {
+      "id": "E1",
+      "type": "Keterangan Ahli",
+      "title": "Laporan Forensik Pemadam",
+      "source": "Diserahkan oleh JPU (Hasil Puslabfor Polri)",
+      "content": "Ditemukan sisa senyawa asam sulfat & hidrokarbon pada lantai berjarak 30 cm dari panel utama. Titik awal api bukan dari dalam komponen MCB."
+    },
+    {
+      "id": "E2",
+      "type": "Surat / Dokumen",
+      "title": "Rekaman CCTV Toko Kelontong",
+      "source": "Disita Penyidik Kepolisian dari Warga",
+      "content": "Pria berjaket hitam dengan gestur berjalan pincang pada kaki kanan (pola identik dengan Budi) keluar dari pintu samping gudang pukul 22.48 WITA."
+    },
+    {
+      "id": "E3",
+      "type": "Dokumen Elektronik",
+      "title": "Audit Sistem Logistik",
+      "source": "Diunduh dari Server Cloud Perusahaan",
+      "content": "ID Budi melakukan modifikasi 'stock adjustment' sebanyak 14 kali dalam 6 bulan tanpa nota retur barang resmi."
+    }
+  ],
+  "crossExaminations": [
+    {
+      "id": "CROSS-1",
+      "speaker": "Siti Aminah (Saksi / Staf Administrasi)",
+      "statement": "Saya melihat Pak Budi masih di ruangannya pukul 22.15 WITA memegang botol pembersih berat. Jam kerja beliau seharusnya selesai pukul 21.00 WITA.",
+      "contradictoryEvidenceId": null,
+      "rebuttalText": null
+    },
+    {
+      "id": "CROSS-2",
+      "speaker": "Agus Pratama (Saksi / Petugas Keamanan)",
+      "statement": "Saya memastikan panel listrik gudang selalu dirawat rutin tiap bulan dan tidak pernah mengalami gangguan sebelumnya.",
+      "contradictoryEvidenceId": null,
+      "rebuttalText": null
+    },
+    {
+      "id": "CROSS-3",
+      "speaker": "Budi Santoso (Terdakwa)",
+      "statement": "Saya tidak berada di tempat kejadian saat kebakaran. Pukul 22.48 WITA saya sudah tidur lelap di rumah bersama istri saya.",
+      "contradictoryEvidenceId": "E2",
+      "rebuttalText": "KEBERATAN DITERIMA! Rekaman CCTV memperlihatkan sosok berpostur dan berkaki pincang identik dengan Anda keluar dari gudang pada pukul 22.48 WITA!"
+    },
+    {
+      "id": "CROSS-4",
+      "speaker": "Budi Santoso (Terdakwa)",
+      "statement": "Kebakaran ini murni kecelakaan korsleting listrik panel tua, bukan disengaja.",
+      "contradictoryEvidenceId": "E1",
+      "rebuttalText": "KEBERATAN DITERIMA! Uji Forensik menemukan sisa hidrokarbon (bahan bakar) di luar MCB, membuktikan adanya unsur kesengajaan!"
+    }
+  ],
+  "correctVerdict": "GUILTY",
+  "correctLegalBasis": "Terbukti melanggar Pasal 187 KUHP jo Pasal 184 KUHAP (2 Alat Bukti Sah: Keterangan Ahli Forensik & Rekaman CCTV).",
+  "explanation": "VONIS TEPAT: BERSALAH. Penemuan hidrokarbon membuktikan kesengajaan, didukung rekaman CCTV dan motif manipulasi audit.",
+  "newsOutcome": {
+    "guilty": {
+      "headline": "HARIAN METRO: 'Eks Manajer Gudang Divonis 8 Tahun Penjara atas Pembakaran Sengaja'",
+      "snippet": "JAKARTA - Majelis Hakim memutus Budi Santoso bersalah. Publik menyambut baik putusan ini setelah bukti forensik hidrokarbon mematahkan klaim korsleting listrik.",
+      "publicOpinion": "🔥 Reaksi Publik: 88% Puas. Hakim dipuji karena cermat menilai bukti forensik."
+    },
+    "innocent": {
+      "headline": "BERITA SIDANG: 'Budi Santoso Bebas, Publik Pertanyakan Keadilan'",
+      "snippet": "JAKARTA - Keputusan Majelis Hakim membebaskan Budi Santoso memicu kontroversi. Tagar #HakimBeratSebelah sempat menduduki tren setelah bukti CCTV diabaikan.",
+      "publicOpinion": "⚠️ Reaksi Publik: 12% Puas. Kepercayaan masyarakat terhadap Pengadilan menurun."
+    }
+  }
+}
 
