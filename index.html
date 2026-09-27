@@ -1,1 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBJECTION! - Simulator Pengadilan ID</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1 style="color: var(--gold); text-align: center; margin-bottom: 15px;">OBJECTION!</h1>
+
+    <!-- Berkas Perkara -->
+    <div class="card">
+        <div class="title">📌 BERKAS PERKARA: <span id="case-title">-</span></div>
+        <p><strong>Terdakwa:</strong> <span id="def-name">-</span></p>
+        <div class="pasal-box">
+            <strong id="pasal-title" style="color: var(--gold);">-</strong>
+            <p id="pasal-text" style="font-style: italic; margin-top: 4px;">-</p>
+        </div>
+    </div>
+
+    <!-- Alat Bukti Sah -->
+    <div class="card">
+        <div class="title">🔍 ALAT BUKTI SAH & ASAL SUMBER (PASAL 184 KUHAP)</div>
+        <div id="evidence-container"></div>
+    </div>
+
+    <!-- Uji Silang -->
+    <div class="card">
+        <div class="title" style="color: #59a0c5;">⚡ UJI SILANG (CROSS EXAMINATION - SAKSI & TERDAKWA)</div>
+        <div id="cross-container"></div>
+    </div>
+
+    <!-- Panel Keputusan -->
+    <div class="card" id="action-panel" style="text-align: center;">
+        <div class="title">AMAR PUTUSAN MAJELIS HAKIM</div>
+        <button class="btn-verdict" style="background: var(--red); color: white;" onclick="makeVerdict('GUILTY')">BERSALAH</button>
+        <button class="btn-verdict" style="background: var(--green); color: white;" onclick="makeVerdict('INNOCENT')">BEBAS (VRIJSPRAAK)</button>
+    </div>
+
+    <!-- Berita Dampak Vonis -->
+    <div id="news-section" style="display: none;">
+        <div class="news-card">
+            <span style="font-size: 0.75rem; background: #000; color: #fff; padding: 2px 6px;">BERITA UTAMA KANAN KORAN</span>
+            <h2 id="news-headline" style="margin-top: 5px; font-family: 'Times New Roman', serif;"></h2>
+            <p id="news-snippet" style="margin-top: 8px; font-size: 0.9rem; line-height: 1.4;"></p>
+            <div id="public-opinion" style="margin-top: 10px; font-weight: bold; color: #444; font-size: 0.85rem;"></div>
+        </div>
+
+        <div class="card" id="verdict-evaluation" style="margin-top: 15px;"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
 
