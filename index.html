@@ -9,74 +9,126 @@
 <body>
 
 <div class="app-container">
-    <header class="app-header">
-        <h1>OBJECTION!</h1>
-        <div id="case-title" class="case-badge">Memuat Kasus...</div>
-    </header>
 
-    <!-- PANEL 1: SIDANG & UJI SILANG (DEFAULT ACTIVE) -->
-    <main id="panel-sidang" class="tab-panel active">
-        <div class="card">
-            <div class="card-title">📌 DAKWAAN & TERDAKWA</div>
-            <p><strong>Terdakwa:</strong> <span id="def-name">-</span></p>
-            <p id="case-desc" style="margin-top: 6px; font-size: 0.9rem; color: #bbb;">-</p>
-        </div>
+    <!-- ==================== HOMEPAGE ==================== -->
+    <div id="view-homepage" class="page-view active">
+        <header class="home-header">
+            <h1>⚖️ OBJECTION!</h1>
+            <p>Simulator Hakim & Persidangan Indonesia</p>
+        </header>
 
-        <div class="card">
-            <div class="card-title" style="color: #59a0c5;">⚡ UJI SILANG (CROSS EXAMINATION)</div>
-            <div id="cross-container"></div>
-        </div>
-
-        <div class="card text-center">
-            <div class="card-title">🔨 AMAR PUTUSAN MAJELIS HAKIM</div>
-            <button class="btn-verdict btn-red" onclick="makeVerdict('GUILTY')">BERSALAH</button>
-            <button class="btn-verdict btn-green" onclick="makeVerdict('INNOCENT')">BEBAS (VRIJSPRAAK)</button>
-        </div>
-
-        <!-- EVALUASI HUKUM (LANGSUNG MUNCUL SETELAH KETUK PALU) -->
-        <div id="legal-evaluation-card" class="card" style="display: none;">
-            <div class="card-title" style="color: #c5a059;">⚖️ PENILAIAN HUKUM / EVALUASI KINERJA</div>
-            <div id="legal-evaluation-content"></div>
-            <button class="btn-next" onclick="openNewsModal()">LIHAT REAKSI PUBLIK (KORAN) 📰</button>
-        </div>
-    </main>
-
-    <!-- PANEL 2: ALAT BUKTI -->
-    <main id="panel-bukti" class="tab-panel">
-        <div class="card">
-            <div class="card-title">🔍 BERKAS ALAT BUKTI SAH (PASAL 184 KUHAP)</div>
-            <div id="evidence-container"></div>
-        </div>
-    </main>
-
-    <!-- PANEL 3: PASAL / UU -->
-    <main id="panel-uu" class="tab-panel">
-        <div class="card">
-            <div class="card-title">📜 LANDASAN HUKUM & PASAL DAKWAAN</div>
-            <div class="pasal-box">
-                <strong id="pasal-title" style="color: #c5a059; font-size: 1.1rem;">-</strong>
-                <p id="pasal-text" style="font-style: italic; margin-top: 8px; line-height: 1.4;">-</p>
+        <!-- CARD PROFIL & SKOR HAKIM -->
+        <div class="card profile-card">
+            <div class="profile-header">
+                <span class="avatar">👨‍⚖️</span>
+                <div>
+                    <h3 id="judge-title">Hakim Pratama</h3>
+                    <p class="sub-text">Pengadilan Negeri Kelas II</p>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-value" id="stat-score">0</span>
+                    <span class="stat-label">Reputasi</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value" id="stat-cases">0</span>
+                    <span class="stat-label">Kasus Selesai</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value" id="stat-accuracy">0%</span>
+                    <span class="stat-label">Akurasi Hukum</span>
+                </div>
             </div>
         </div>
-    </main>
 
-    <!-- BOTTOM NAVIGATION BAR -->
-    <nav class="bottom-nav">
-        <button class="nav-btn active" onclick="switchTab('panel-sidang', this)">
-            <span>⚖️</span>
-            <span>Sidang</span>
-        </button>
-        <button class="nav-btn" onclick="switchTab('panel-bukti', this)">
-            <span>🔍</span>
-            <span>Alat Bukti</span>
-        </button>
-        <button class="nav-btn" onclick="switchTab('panel-uu', this)">
-            <span>📜</span>
-            <span>UU / Pasal</span>
-        </button>
-    </nav>
+        <!-- PILIHAN KASUS -->
+        <div class="section-title">📂 PILIH PERKASARAN KASUS</div>
+        <div id="case-list-container">
+            <!-- List kasus diisi secara dinamis dari JS -->
+        </div>
 
-    <!-- MODAL POPUP KORAN (PENILAIAN UMUM/PUBLIK) -->
+        <!-- RIWAYAT PERSIDANGAN -->
+        <div class="section-title">📜 RIWAYAT PERSIDANGAN (HISTORY)</div>
+        <div class="card">
+            <div id="history-container">
+                <p class="text-muted text-center">Belum ada riwayat kasus yang diputus.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== GAMEPLAY VIEW ==================== -->
+    <div id="view-gameplay" class="page-view">
+        <header class="app-header">
+            <button class="btn-back" onclick="showHomepage()">⬅️ Kembali</button>
+            <div id="case-title" class="case-badge">Memuat Kasus...</div>
+        </header>
+
+        <!-- PANEL 1: SIDANG (DEFAULT) -->
+        <main id="panel-sidang" class="tab-panel active">
+            <div class="card">
+                <div class="card-title">📌 DAKWAAN & TERDAKWA</div>
+                <p><strong>Terdakwa:</strong> <span id="def-name">-</span></p>
+                <p id="case-desc" style="margin-top: 6px; font-size: 0.9rem; color: #bbb;">-</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title" style="color: #59a0c5;">⚡ UJI SILANG (CROSS EXAMINATION)</div>
+                <div id="cross-container"></div>
+            </div>
+
+            <div class="card text-center" id="verdict-action-card">
+                <div class="card-title">🔨 AMAR PUTUSAN MAJELIS HAKIM</div>
+                <button class="btn-verdict btn-red" onclick="makeVerdict('GUILTY')">BERSALAH</button>
+                <button class="btn-verdict btn-green" onclick="makeVerdict('INNOCENT')">BEBAS (VRIJSPRAAK)</button>
+            </div>
+
+            <!-- EVALUASI HUKUM -->
+            <div id="legal-evaluation-card" class="card" style="display: none;">
+                <div class="card-title" style="color: #c5a059;">⚖️ PENILAIAN HUKUM / EVALUASI KINERJA</div>
+                <div id="legal-evaluation-content"></div>
+                <button class="btn-next" onclick="openNewsModal()">LIHAT REAKSI PUBLIK (KORAN) 📰</button>
+                <button class="btn-next" style="background: #3a3a4c; color: white; margin-top: 8px;" onclick="showHomepage()">KEMBALI KE HOMEPAGE 🏠</button>
+            </div>
+        </main>
+
+        <!-- PANEL 2: ALAT BUKTI -->
+        <main id="panel-bukti" class="tab-panel">
+            <div class="card">
+                <div class="card-title">🔍 BERKAS ALAT BUKTI SAH (PASAL 184 KUHAP)</div>
+                <div id="evidence-container"></div>
+            </div>
+        </main>
+
+        <!-- PANEL 3: PASAL / UU -->
+        <main id="panel-uu" class="tab-panel">
+            <div class="card">
+                <div class="card-title">📜 LANDASAN HUKUM & PASAL DAKWAAN</div>
+                <div class="pasal-box">
+                    <strong id="pasal-title" style="color: #c5a059; font-size: 1.1rem;">-</strong>
+                    <p id="pasal-text" style="font-style: italic; margin-top: 8px; line-height: 1.4;">-</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- BOTTOM NAVIGATION BAR -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" onclick="switchTab('panel-sidang', this)">
+                <span>⚖️</span>
+                <span>Sidang</span>
+            </button>
+            <button class="nav-btn" onclick="switchTab('panel-bukti', this)">
+                <span>🔍</span>
+                <span>Alat Bukti</span>
+            </button>
+            <button class="nav-btn" onclick="switchTab('panel-uu', this)">
+                <span>📜</span>
+                <span>UU / Pasal</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- MODAL POPUP KORAN -->
     <div id="news-modal" class="modal-overlay" style="display: none;">
         <div class="modal-content news-paper">
             <div class="newspaper-header">
@@ -90,6 +142,7 @@
             <button class="btn-close-paper" onclick="closeNewsModal()">TUTUP KORAN</button>
         </div>
     </div>
+
 </div>
 
 <script src="app.js"></script>
