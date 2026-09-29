@@ -14,66 +14,79 @@ let judgeStats = JSON.parse(localStorage.getItem('judgeStats')) || {
     history: []
 };
 
-// INITIALIZATION
-window.onload = () => {
-    updateHomepageUI();
-};
+// INISIALISASI AWAL
+document.addEventListener('DOMContentLoaded', () => {
+    showHomepage();
+});
 
 function showHomepage() {
-    document.getElementById('view-gameplay').classList.remove('active');
-    document.getElementById('view-homepage').classList.add('active');
+    const gameplayView = document.getElementById('view-gameplay');
+    const homepageView = document.getElementById('view-homepage');
+    
+    if (gameplayView) gameplayView.classList.remove('active');
+    if (homepageView) homepageView.classList.add('active');
+    
     updateHomepageUI();
 }
 
 function updateHomepageUI() {
     // 1. Update Skor & Gelar Hakim
-    document.getElementById('stat-score').innerText = judgeStats.score;
-    document.getElementById('stat-cases').innerText = judgeStats.casesCompleted;
+    const scoreEl = document.getElementById('stat-score');
+    const casesEl = document.getElementById('stat-cases');
+    const accuracyEl = document.getElementById('stat-accuracy');
+    const titleEl = document.getElementById('judge-title');
+
+    if (scoreEl) scoreEl.innerText = judgeStats.score;
+    if (casesEl) casesEl.innerText = judgeStats.casesCompleted;
     
     let accuracy = judgeStats.casesCompleted > 0 
         ? Math.round((judgeStats.correctVerdicts / judgeStats.casesCompleted) * 100) 
         : 0;
-    document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
+    if (accuracyEl) accuracyEl.innerText = `${accuracy}%`;
 
     // Gelar Hakim berdasarkan skor
     let title = "Hakim Pratama";
     if (judgeStats.score >= 300) title = "Hakim Agung";
     else if (judgeStats.score >= 150) title = "Hakim Utama";
     else if (judgeStats.score >= 50) title = "Hakim Madya";
-    document.getElementById('judge-title').innerText = title;
+    if (titleEl) titleEl.innerText = title;
 
     // 2. Render Daftar Kasus
     const caseListEl = document.getElementById('case-list-container');
-    caseListEl.innerHTML = '';
-    availableCases.forEach(c => {
-        const item = document.createElement('div');
-        item.className = 'case-item';
-        item.innerHTML = `
-            <div>
-                <strong>${c.title}</strong>
-                <p class="sub-text">Pidana Khusus / Umum</p>
-            </div>
-            <button class="btn-start" onclick="startCase('${c.file}')">SIDANGKAN</button>
-        `;
-        caseListEl.appendChild(item);
-    });
+    if (caseListEl) {
+        caseListEl.innerHTML = '';
+        availableCases.forEach(c => {
+            const item = document.createElement('div');
+            item.className = 'case-item';
+            item.innerHTML = `
+                <div>
+                    <strong>${c.title}</strong>
+                    <p class="sub-text">Pidana Khusus / Umum</p>
+                </div>
+                <button class="btn-start" onclick="startCase('${c.file}')">SIDANGKAN</button>
+            `;
+            caseListEl.appendChild(item);
+        });
+    }
 
     // 3. Render Riwayat Kasus
     const historyEl = document.getElementById('history-container');
-    if (judgeStats.history.length === 0) {
-        historyEl.innerHTML = `<p class="text-muted text-center">Belum ada riwayat kasus yang diputus.</p>`;
-    } else {
-        historyEl.innerHTML = '';
-        judgeStats.history.forEach(h => {
-            const div = document.createElement('div');
-            div.className = 'history-item';
-            let badge = h.isCorrect ? '<span style="color:#2ecc71;">✅ Tepat</span>' : '<span style="color:#e74c3c;">❌ Cacat Hukum</span>';
-            div.innerHTML = `
-                <span>${h.title} (${h.verdict})</span>
-                <span>${badge}</span>
-            `;
-            historyEl.appendChild(div);
-        });
+    if (historyEl) {
+        if (!judgeStats.history || judgeStats.history.length === 0) {
+            historyEl.innerHTML = `<p class="text-muted text-center">Belum ada riwayat kasus yang diputus.</p>`;
+        } else {
+            historyEl.innerHTML = '';
+            judgeStats.history.forEach(h => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                let badge = h.isCorrect ? '<span style="color:#2ecc71;">✅ Tepat</span>' : '<span style="color:#e74c3c;">❌ Cacat Hukum</span>';
+                div.innerHTML = `
+                    <span>${h.title} (${h.verdict})</span>
+                    <span>${badge}</span>
+                `;
+                historyEl.appendChild(div);
+            });
+        }
     }
 }
 
@@ -81,6 +94,8 @@ function updateHomepageUI() {
 async function startCase(caseFile) {
     try {
         const response = await fetch(caseFile);
+        if (!response.ok) throw new Error("Gagal mengambil file JSON kasus");
+        
         currentCaseData = await response.json();
         
         // Reset UI Gameplay
@@ -93,10 +108,12 @@ async function startCase(caseFile) {
         // Pindah Tampilan ke Gameplay
         document.getElementById('view-homepage').classList.remove('active');
         document.getElementById('view-gameplay').classList.add('active');
-        switchTab('panel-sidang', document.querySelectorAll('.nav-btn')[0]);
+        
+        const firstNavBtn = document.querySelectorAll('.nav-btn')[0];
+        if (firstNavBtn) switchTab('panel-sidang', firstNavBtn);
 
     } catch (e) {
-        alert("Gagal memuat berkas kasus!");
+        alert("Gagal memuat berkas kasus! Pastikan file JSON sudah di-commit di GitHub.");
         console.error(e);
     }
 }
@@ -105,8 +122,9 @@ function switchTab(panelId, btnElement) {
     document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
 
-    document.getElementById(panelId).classList.add('active');
-    btnElement.classList.add('active');
+    const targetPanel = document.getElementById(panelId);
+    if (targetPanel) targetPanel.classList.add('active');
+    if (btnElement) btnElement.classList.add('active');
 }
 
 function renderCase(c) {
@@ -184,15 +202,13 @@ function rebutStatement(crossId, correctEvidenceId) {
 function skipStatement(crossId, correctEvidenceId) {
     const feedbackEl = document.getElementById(`feedback-${crossId}`);
 
+    feedbackEl.style.display = 'block';
+    feedbackEl.className = 'rebuttal-feedback neutral';
+    feedbackEl.innerHTML = `<strong>Dilewati</strong>`;
+
     if (!correctEvidenceId) {
-        feedbackEl.style.display = 'block';
-        feedbackEl.className = 'rebuttal-feedback neutral';
-        feedbackEl.innerHTML = `<strong>✅ KETERANGAN DITERIMA:</strong> Pernyataan jujur/wajar.`;
         userActions[crossId] = { status: 'SKIPPED_CORRECTLY', isCorrect: true };
     } else {
-        feedbackEl.style.display = 'block';
-        feedbackEl.className = 'rebuttal-feedback error';
-        feedbackEl.innerHTML = `<strong>⚠️ PERNYATAAN BOHONG DILEWATKAN!</strong>`;
         userActions[crossId] = { status: 'MISSED_LIE', isCorrect: false };
     }
 }
@@ -217,9 +233,9 @@ function makeVerdict(userVerdict) {
         let action = userActions[item.id];
         if (action.status === 'REBUTTED' && action.isCorrect) {
             earnedPoints += 20;
-            detailsHTML += `<li style="color: #2ecc71;">[Berhasil] Berhasil mengungkap kebohongan (+20 Pts)</li>`;
-        } else if (action.status === 'MISSED_LIE') {
-            detailsHTML += `<li style="color: #e74c3c;">[Terlewat] Kebohongan gagal diungkap</li>`;
+            detailsHTML += `<li style="color: #2ecc71;">[Berhasil] Keberatan tepat diajukan (+20 Pts)</li>`;
+        } else if (action.status === 'SKIPPED_CORRECTLY' || action.status === 'MISSED_LIE' || action.status === 'UNEXAMINED') {
+            detailsHTML += `<li style="color: #888888;">[Dilewati] Pernyataan "${item.speaker}" dilewati</li>`;
         } else if (action.status === 'WRONG_REBUTTAL') {
             earnedPoints -= 10;
             detailsHTML += `<li style="color: #e74c3c;">[Salah Sanggah] Keberatan keliru (-10 Pts)</li>`;
